@@ -33,12 +33,28 @@ void folderToClassDiagram(std::string folderpath, bool isWin){
     std::vector<std::string> classNames;
     for (int i = 0; i < classesText.size(); ++i) {
         classNames.push_back(classes[i].getName());
+
+        for (int j = 0; j < classes[i].getEnums().size(); ++j) {
+            classNames.push_back(classes[i].getEnums()[j].getName());
+        }
+        for (int j = 0; j < classes[i].getStructs().size(); ++j) {
+            classNames.push_back(classes[i].getStructs()[j].getName());
+        }
     }
 
     std::vector<Arrow> allArrows;
-    for (int i = 0; i < classesText.size(); ++i) {
+    for (int i = 0; i < classes.size(); ++i) {
         std::vector<Arrow> classArrow = classes[i].getArrows(classNames);
         allArrows.insert(allArrows.end(), classArrow.begin(), classArrow.end());
+
+        for (int j = 0; j < classes[i].getEnums().size(); ++j) {
+            std::vector<Arrow> classArrow = classes[i].getEnums()[j].getArrows(classNames);
+            allArrows.insert(allArrows.end(), classArrow.begin(), classArrow.end());
+        }
+        for (int j = 0; j < classes[i].getStructs().size(); ++j) {
+            std::vector<Arrow> classArrow = classes[i].getStructs()[j].getArrows(classNames);
+            allArrows.insert(allArrows.end(), classArrow.begin(), classArrow.end());
+        }
     }
 
     loader.saveXML(classes, allArrows, folderpath + (isWin ? "\\" : "/") + "class_diagram.xml");
