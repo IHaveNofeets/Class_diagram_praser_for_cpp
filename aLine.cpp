@@ -62,6 +62,7 @@ void aLine::setLine(std::string line, std::string acc){
     //remove all after name:
     if(isFunction){
         int pos = line.find("(");
+        functionParemeter = line.substr(pos);
         line.erase(line.begin() + pos, line.end());
     }else{
         if(QString::fromStdString(line).toLower().contains("=")){

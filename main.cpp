@@ -13,8 +13,8 @@ void folderToClassDiagram(std::string folderpath, bool isWin);
 
 int main()
 {
-    //folderToClassDiagram("C:\\Users\\tobia\\OneDrive - Syddansk Universitet\\Skrivebord\\SDU\\Sem_2\\C++\\Class_diagram\\class_diagram", true);
-    folderToClassDiagram("C:\\Users\\tobia\\OneDrive - Syddansk Universitet\\Skrivebord\\SDU\\Sem_2\\projekt\\c++ code\\SDU-Gripper-sem2", true);
+    folderToClassDiagram("C:\\Users\\tobia\\OneDrive - Syddansk Universitet\\Skrivebord\\SDU\\Sem_2\\C++\\Class_diagram\\class_diagram", true);
+    //folderToClassDiagram("C:\\Users\\tobia\\OneDrive - Syddansk Universitet\\Skrivebord\\SDU\\Sem_2\\Softwareudvikling\\Exam\\SU\\iteration 3\\C++ code\\I3", true);
 
     //TODO: arrows number
 

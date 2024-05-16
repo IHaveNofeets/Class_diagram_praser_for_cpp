@@ -16,6 +16,8 @@ public:
     bool getIsFunction(){return isFunction;}
     bool getIsStatic(){return isStatic;}
     std::string getType(){return type;}
+    std::string getFunctionParemeter(){return functionParemeter;}
+
 
 private:
     bool isStatic = false;
@@ -26,6 +28,7 @@ private:
     bool isDerived = false;
     bool hasCustomAcc = false;
     std::string customAcc = "";
+    std::string functionParemeter = "";
 
     bool isFunction = false;
 

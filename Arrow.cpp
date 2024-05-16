@@ -31,8 +31,10 @@ std::string Arrow::toXML(std::map<std::string, std::string> &classNamesToId, int
 
     if(isSubClass){
         out += "endArrow=block;endFill=0;startArrow=none;startFill=0;";
-    }else{
-        out += "endArrow=classic;endFill=1;startArrow=none;startFill=0;";
+    }else if(from == "main.cpp"){
+        out += "endArrow=none;endFill=0;startArrow=diamondThin;startFill=1;";
+    } else{
+        out += "endArrow=none;endFill=0;startArrow=diamondThin;startFill=0;";
     }
 
     out += "\" edge=\"1\" parent=\"id2\" source=\"" + classNamesToId[from];

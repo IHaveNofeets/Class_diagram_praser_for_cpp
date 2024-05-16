@@ -27,7 +27,18 @@ std::vector<std::string> aClass::split(const std::string& line, char delim){
 }
 
 void aClass::parse(){
-    if(mName == "main.cpp"){return;}
+    if(mName == "main.cpp"){
+        std::vector<std::string> allMainData;
+        for (int i = 0; i < mData.size(); ++i) {
+            mData[i].erase(std::remove_if(mData[i].begin(), mData[i].end(), isspace), mData[i].end());
+            if(mData[i].substr(0,8) == "#include" && mData[i].find("\"") != -1){
+                allMainData.push_back(mData[i].substr(8));
+            }
+        }
+        mData = allMainData;
+
+        return;
+    }
     //remove name
     for (int i = 0; i < mData.size()-1; ++i) {
         mData[i] = mData[i + 1];
@@ -258,6 +269,25 @@ std::vector<Arrow> aClass::getArrows(std::vector<std::string> classNames){
         }
     }
 
+    if(mName == "main.cpp"){
+        for (int i = 0; i < mData.size(); ++i) {
+            int startPos = mData[i].find("\"") + 1;
+            int endPos = mData[i].find(".h") - 1;
+            std::string realData = mData[i].substr(startPos, endPos);
+            for (int j = 0; j < classNames.size(); ++j) {
+                if(realData == classNames[j]){
+                    Arrow a{};
+                    a.from = mName;
+                    a.to = classNames[j];
+                    out.push_back(a);
+
+                    break;
+                }
+            }
+        }
+        return out;
+    }
+
     std::vector<aLine> attebutes;
     std::vector<aLine> functions;
 
@@ -286,10 +316,35 @@ std::vector<Arrow> aClass::getArrows(std::vector<std::string> classNames){
                 out.push_back(a);
             }
         }
+        for (int j = 0; j < functions.size(); ++j) {
+            if(functions[j].getFunctionParemeter().find(classNames[i]) != -1){
+                Arrow a{};
+                a.from = mName;
+                a.fromMax = 1;
+                a.to = classNames[i];
+                if(functions[j].getFunctionParemeter().find("<") != -1){
+                    a.toHasNoMax = true;
+                }else{
+                    a.toMax = 1;
+                }
+
+                out.push_back(a);
+            }
+        }
     }
 
+    std::vector<Arrow> outout;
+    for (int i = 0; i < out.size(); ++i) {
+        bool has = false;
+        for (int j = 0; j < outout.size(); ++j) {
+            if(out[i].to == outout[j].to && out[i].isSubClass == outout[j].isSubClass){
+                has = true;
+            }
+        }
+        if(!has){
+            outout.push_back(out[i]);
+        }
+    }
 
-
-
-    return out;
+    return outout;
 }

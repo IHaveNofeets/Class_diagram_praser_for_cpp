@@ -28,12 +28,15 @@ std::vector<std::vector<std::string>> Loader::getFiles(std::string folderPath, b
     std::vector<std::string> headerFiles;
     headerFiles.reserve(allFiles.size());
     bool hasMain = false;
+    std::string mainPath = "";
 
     for (std::string file : allFiles) {
         if(file.find(".h") != -1){
             headerFiles.push_back(file);
         }else if(file == "main.cpp"){
             hasMain = true;
+            mainPath = folderPath + (isWin ? "\\" : "/") + file;
+            headerFiles.push_back(file);
         }
     }
     headerFiles.shrink_to_fit();
@@ -59,7 +62,7 @@ std::vector<std::vector<std::string>> Loader::getFiles(std::string folderPath, b
     }
 
     if(hasMain){
-        out.push_back(std::vector<std::string>{"main.cpp"});
+        //out.push_back(std::vector<std::string>{"main.cpp"});
     }
 
     return out;
